@@ -1,12 +1,9 @@
 import * as H from 'highland';
 import * as fs from 'fs';
+import { parseIntArray, calculateArraySum } from '../helpers';
 
 const input = fs.createReadStream('input.txt');
 const output = process.stdout;
-
-const parseIntArray = (arr: string[]) => arr.map((s) => parseInt(s));
-
-const calculateArraySum = (arr: number[]) => arr.reduce((a, b) => a + b, 0);
 
 H<string>(input)
   .splitBy('\n\n')
@@ -20,3 +17,4 @@ H<string>(input)
   .intersperse('\n')
   .head()
   .pipe(output);
+
