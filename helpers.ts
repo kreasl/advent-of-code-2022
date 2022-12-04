@@ -42,3 +42,11 @@ export const getIntersection = <T>(arrays: Array<Array<T>>): Array<T> => {
 
   return intersection;
 }
+
+export const isOverlapping = ([s1, e1]: number[], [s2, e2]: number[], full = false) => {
+  if (e1 < s2 || e2 < s1) return false;
+
+  if (!full) return true;
+
+  return (s1 - s2) * (e1 - e2) <= 0;
+};
