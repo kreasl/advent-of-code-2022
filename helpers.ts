@@ -1,3 +1,6 @@
+import * as H from 'highland';
+import Stream = Highland.Stream;
+
 export const print = (x: any) => console.log(`\n${JSON.stringify(x)}`);
 
 export const parseIntArray = (arr: string[]) => arr.map((s) => parseInt(s));
@@ -50,3 +53,24 @@ export const isOverlapping = ([s1, e1]: number[], [s2, e2]: number[], full = fal
 
   return (s1 - s2) * (e1 - e2) <= 0;
 };
+
+export const splitStreamBy = <T>(stream: Stream<T>, condition: Function): Stream<Stream<T>> => {
+  return stream
+    .reduce([[]], (groups, x) => {
+      if (condition(x)) return [...groups, []];
+
+      const body = groups.slice(0, -1);
+      const tail = groups.at(-1);
+
+      return [...body, [...tail, x]];
+    })
+    .consume((_, groups: Array<Array<T>>, push, next) => {
+      if (Array.isArray(groups) && groups.length) {
+        groups.forEach((group) => {
+          if (group.length) push(null, H(group));
+        });
+      }
+
+      next();
+    });
+}
