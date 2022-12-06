@@ -1,8 +1,7 @@
-import { getTuples, readFile, takeWhile } from '../../helpers/streams';
+import Stream = Highland.Stream;
+import { getTuples, readFile, output, takeWhile } from '../../helpers/streams';
 
 const TUPLE_SIZE = 14;
-
-const output = process.stdout;
 
 const input = readFile('input.txt')
   .split().compact()
@@ -15,9 +14,8 @@ const noise = takeWhile(
   (arr) => (new Set(arr)).size !== arr.length
 );
 
-noise
+const answer: Stream<number> = noise
   .collect()
-  .map((arr) => arr.length + TUPLE_SIZE)
-  .map(JSON.stringify)
-  .intersperse('\n')
-  .pipe(output);
+  .map((arr) => arr.length + TUPLE_SIZE);
+
+output(answer)

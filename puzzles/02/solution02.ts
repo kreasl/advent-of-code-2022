@@ -1,6 +1,4 @@
-import { readFile } from '../../helpers/streams';
-
-const output = process.stdout;
+import { readFile, output } from '../../helpers/streams';
 
 enum GST {
   ROCK = 'rock',
@@ -62,13 +60,11 @@ const getRoundOutcome = ([elf, mine]) => {
   return roundScore + gScores[mine];
 };
 
-readFile('input.txt')
+const answer = readFile('input.txt')
   .split()
   .compact()
   .map(getRoundGestures)
   .map(getRoundOutcome)
-  .reduce1((a, b) => a + b)
-  .map(JSON.stringify)
-  .intersperse('\n')
-  .pipe(output);
+  .reduce1((a, b) => a + b);
 
+output(answer);

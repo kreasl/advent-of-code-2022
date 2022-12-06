@@ -1,9 +1,8 @@
 import * as H from 'highland';
 import { parseIntArray } from '../../helpers/arrays';
-import { takeWhile, dropWhile, readFile } from '../../helpers/streams';
+import { takeWhile, dropWhile, readFile, output } from '../../helpers/streams';
 
 const input = readFile('input.txt').split();
-const output = process.stdout;
 
 const parseState = (data) => {
   const parsedState = data.map((line) => line.match(/.{1,4}/g));
@@ -51,7 +50,7 @@ const parseCommand = (line) => line.match(/\d+/g);
 
   const initialState = await stateStream.toPromise(Promise);
 
-  operations
+  const answer = operations
     .reduce(initialState, (state, [amount, from, to]) => {
       const updatedState = [...state];
 
@@ -75,8 +74,7 @@ const parseCommand = (line) => line.match(/\d+/g);
       }
     })
     .map((spot) => spot.at(-1))
-    .reduce1((a, b) => a + b)
-    .map(JSON.stringify)
-    .intersperse('\n')
-    .pipe(output);
+    .reduce1((a, b) => a + b);
+
+  output(answer);
 }) ();

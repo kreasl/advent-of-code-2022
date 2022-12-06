@@ -1,9 +1,7 @@
 import { parseIntArray, calculateArraySum } from '../../helpers/arrays';
-import { readFile } from '../../helpers/streams';
+import { output, readFile } from '../../helpers/streams';
 
-const output = process.stdout;
-
-readFile('input.txt')
+const answer = readFile('input.txt')
   .splitBy('\n\n')
   .map((str) => str.split('\n'))
   .map(parseIntArray)
@@ -11,8 +9,6 @@ readFile('input.txt')
   .sortBy((a, b) => b - a)
   .batch(3)
   .map(calculateArraySum)
-  .map(JSON.stringify)
-  .intersperse('\n')
-  .head()
-  .pipe(output);
+  .head();
 
+output(answer);
