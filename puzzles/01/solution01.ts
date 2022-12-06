@@ -1,11 +1,9 @@
-import * as H from 'highland';
-import * as fs from 'fs';
-import { parseIntArray, calculateArraySum } from '../helpers';
+import { parseIntArray, calculateArraySum } from '../../helpers/arrays';
+import { readFile } from '../../helpers/streams';
 
-const input = fs.createReadStream('input.txt');
 const output = process.stdout;
 
-H<string>(input)
+readFile('input.txt')
   .splitBy('\n\n')
   .map((str) => str.split('\n'))
   .map(parseIntArray)

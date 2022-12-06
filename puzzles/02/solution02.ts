@@ -1,7 +1,5 @@
-import * as H from 'highland';
-import * as fs from 'fs';
+import { readFile } from '../../helpers/streams';
 
-const input = fs.createReadStream('input.txt');
 const output = process.stdout;
 
 enum GST {
@@ -64,7 +62,7 @@ const getRoundOutcome = ([elf, mine]) => {
   return roundScore + gScores[mine];
 };
 
-H<string>(input)
+readFile('input.txt')
   .split()
   .compact()
   .map(getRoundGestures)

@@ -1,15 +1,13 @@
-import * as H from 'highland';
-import * as fs from 'fs';
-import { getIntersection } from '../helpers';
+import { getIntersection } from '../../helpers/arrays';
+import { readFile } from '../../helpers/streams';
 
-const input = fs.createReadStream('input.txt');
 const output = process.stdout;
 
 const PRIORITY = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 const getPriority = (ch) => PRIORITY.indexOf(ch) + 1;
 
-H<string>(input)
+readFile('input.txt')
   .split().compact()
   .map((s) => s.split(''))
   .map((arr) => arr.sort())

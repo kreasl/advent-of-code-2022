@@ -1,8 +1,8 @@
 import * as H from 'highland';
-import * as fs from 'fs';
-import { parseIntArray, takeWhile, dropWhile } from '../helpers';
+import { parseIntArray } from '../../helpers/arrays';
+import { takeWhile, dropWhile, readFile } from '../../helpers/streams';
 
-const inputStream = fs.createReadStream('input.txt');
+const input = readFile('input.txt').split();
 const output = process.stdout;
 
 const parseState = (data) => {
@@ -33,9 +33,6 @@ const parseState = (data) => {
 const parseCommand = (line) => line.match(/\d+/g);
 
 (async () => {
-  const input = H<string>(inputStream)
-    .split();
-
   const stateStream = takeWhile(
       input.observe(),
       (str) => str !== '',
