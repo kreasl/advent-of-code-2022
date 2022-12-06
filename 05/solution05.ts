@@ -1,7 +1,6 @@
 import * as H from 'highland';
 import * as fs from 'fs';
-import { parseIntArray, splitStreamBy } from '../helpers';
-import Stream = Highland.Stream;
+import { parseIntArray, takeWhile, dropWhile } from '../helpers';
 
 const inputStream = fs.createReadStream('input.txt');
 const output = process.stdout;
@@ -34,20 +33,20 @@ const parseState = (data) => {
 const parseCommand = (line) => line.match(/\d+/g);
 
 (async () => {
-  const input = splitStreamBy<string>(
-    H<string>(inputStream).split(),
-    (str: string) => str === '',
-  );
+  const input = H<string>(inputStream)
+    .split();
 
-  const stateStream = input.observe()
-    .head()
-    .flatten()
+  const stateStream = takeWhile(
+      input.observe(),
+      (str) => str !== '',
+    )
     .collect()
     .map(parseState);
-  const operations = input.observe()
-    .drop(1)
-    .head()
-    .flatten()
+  const operations = dropWhile(
+      input.observe(),
+      (str) => str !== '',
+    )
+    .compact()
     .map(parseCommand)
     .map(parseIntArray)
 
@@ -72,9 +71,14 @@ const parseCommand = (line) => line.match(/\d+/g);
         state.forEach((spot) => push(null, spot));
       }
 
-      next();
+      if (H.isNil(state)) {
+        push(null, state);
+      } else {
+        next();
+      }
     })
     .map((spot) => spot.at(-1))
+    .reduce1((a, b) => a + b)
     .map(JSON.stringify)
     .intersperse('\n')
     .pipe(output);

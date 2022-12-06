@@ -1,7 +1,50 @@
 import * as H from 'highland';
 import Stream = Highland.Stream;
 
-export const print = (x: any) => console.log(`\n${JSON.stringify(x)}`);
+export const takeWhile = <T>(stream: Stream<T>, condition: Function): Stream<T> => {
+  let conditionIsMet = true;
+
+  return stream
+    .consume((_, x, push, next) => {
+      if (conditionIsMet && condition(x)) {
+        push(null, x);
+      } else {
+        conditionIsMet = false;
+      }
+
+      if (H.isNil(x)) {
+        push(null, x);
+      } else {
+        next();
+      }
+    });
+}
+
+export const dropWhile = <T>(stream: Stream<T>, condition: Function): Stream<T> => {
+  let conditionIsMet = false;
+
+  return stream
+    .consume((_, x, push, next) => {
+      if (conditionIsMet || !condition(x)) {
+        conditionIsMet = true;
+        push(null, x);
+      }
+
+      if (!H.isNil(x)) next();
+    });
+}
+
+export const getTuples = <T>(stream: Stream<T>, size: number): Stream<Array<T>> => {
+  const tail = Array(size - 1)
+    .fill(0)
+    .map((_, sz) => stream.observe().drop(sz))
+    .reverse();
+
+  return stream
+    .drop(size - 1)
+    .zipAll(H(tail))
+    .map((arr) => arr.reverse());
+}
 
 export const parseIntArray = (arr: string[]) => arr.map((s) => parseInt(s));
 
@@ -53,24 +96,3 @@ export const isOverlapping = ([s1, e1]: number[], [s2, e2]: number[], full = fal
 
   return (s1 - s2) * (e1 - e2) <= 0;
 };
-
-export const splitStreamBy = <T>(stream: Stream<T>, condition: Function): Stream<Stream<T>> => {
-  return stream
-    .reduce([[]], (groups, x) => {
-      if (condition(x)) return [...groups, []];
-
-      const body = groups.slice(0, -1);
-      const tail = groups.at(-1);
-
-      return [...body, [...tail, x]];
-    })
-    .consume((_, groups: Array<Array<T>>, push, next) => {
-      if (Array.isArray(groups) && groups.length) {
-        groups.forEach((group) => {
-          if (group.length) push(null, H(group));
-        });
-      }
-
-      next();
-    });
-}

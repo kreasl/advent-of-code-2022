@@ -1,6 +1,6 @@
 import * as H from 'highland';
 import * as fs from 'fs';
-import { getIntersection, splitArrayToBatches, print } from '../helpers';
+import { getIntersection } from '../helpers';
 
 const input = fs.createReadStream('input.txt');
 const output = process.stdout;
