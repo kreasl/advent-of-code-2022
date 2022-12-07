@@ -55,3 +55,33 @@ export const getTuples = <T>(stream: Stream<T>, size: number): Stream<Array<T>> 
     .zipAll(H(tail))
     .map((arr) => arr.reverse());
 }
+
+export const batchWithHead = <T>(stream: Stream<T>, condition: Function): Stream<T[]> => {
+  let acc: T[] = [];
+
+  return stream.consume((err, x, push, next) => {
+    if (H.isNil(x)) {
+      if (acc.length) push(null, acc);
+
+      push(null, x);
+
+      return;
+    }
+
+    if (!condition(x)) {
+      acc.push(x);
+
+      next();
+
+      return;
+    }
+
+    if (acc.length) {
+      push(null, acc);
+    }
+
+    acc = [x];
+
+    next();
+  });
+};
