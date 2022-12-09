@@ -67,7 +67,7 @@ export const batchWithHead = <T>(stream: Stream<T>, condition: Function): Stream
     if (H.isNil(x)) {
       if (acc.length) push(null, acc);
 
-      push(null, x);
+      push(null, H.nil);
 
       return;
     }

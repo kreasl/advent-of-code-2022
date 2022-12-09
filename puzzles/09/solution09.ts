@@ -1,14 +1,11 @@
 import * as H from 'highland';
 import { readFile, output } from '../../helpers/streams';
 import {
-  getSegmentCount,
   parseMove,
-  compareSegments,
-  getSegmentsIntersection,
-  compareDots,
   getMoveConsumer,
 } from './helpers';
-import { Dot, Segment } from './interface';
+import { Dot, Segment } from '../../helpers/interface';
+import { compareDots, compareSegments, getSegmentCount, getSegmentsIntersection } from '../../helpers/geometry';
 
 const input = readFile('input.txt')
   .split().compact();
