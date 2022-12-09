@@ -4,11 +4,15 @@ import Stream = Highland.Stream;
 
 export const readFile = H.wrapCallback(fs.readFile);
 
-export const output = <T>(stream: Stream<T>): void => {
-  stream
-    .map(JSON.stringify)
-    .intersperse('\n')
-    .pipe(process.stdout);
+export const output = <T>(stream: Stream<T> | any): void => {
+  if (H.isStream(stream)) {
+    stream
+      .map(JSON.stringify)
+      .intersperse('\n')
+      .pipe(process.stdout);
+  } else {
+    console.log(stream);
+  }
 }
 
 export const takeWhile = <T>(stream: Stream<T>, condition: Function): Stream<T> => {

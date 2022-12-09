@@ -48,3 +48,11 @@ export const isOverlapping = ([s1, e1]: number[], [s2, e2]: number[], full = fal
 
   return (s1 - s2) * (e1 - e2) <= 0;
 };
+
+export const transpose = <T>(arr: T[][]): T[][] => {
+  return Array(arr[0].length).fill(0)
+    .map((line, y) => {
+      return Array(arr.length).fill(0)
+        .map((el, x) => arr[x][y]);
+    });
+}
