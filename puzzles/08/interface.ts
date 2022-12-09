@@ -9,3 +9,8 @@ export interface Cell {
   x: number;
   y: number;
 }
+
+export interface Peak {
+  h: number;
+  d: number;
+}

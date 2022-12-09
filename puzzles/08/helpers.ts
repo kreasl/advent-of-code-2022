@@ -1,6 +1,6 @@
 import * as H from 'highland';
 import Stream = Highland.Stream;
-import { Belt, Cell } from './interface';
+import { Belt, Cell, Peak } from './interface';
 
 export const getBelts = (values: number[][]): Stream<Belt<number>> => {
   return H((push) => {
@@ -99,10 +99,29 @@ export const getLineVisibility = (heights: number[], transform: (number) => Cell
   return [...bVis, ...eVis];
 }
 
-// export const getTreeLineVisibility = (heights: number[]): number[] => {
-//   let length = 0;
-//   let stack = [];
-//   const bVis = heights.map((h) => {
-//
-//   });
-// };
+export const getTreeLineVisibility = (heights: number[]): number[] => {
+  let length = 0;
+  let stack: Peak[] = [];
+
+  return heights.map((h, idh) => {
+    let ids = stack.length - 1;
+    let peak: Peak = { h, d: 1 };
+
+    while (ids >= 0 && stack[ids].h < h) ids--;
+
+    if (ids === -1) {
+      stack = [peak];
+
+      return idh;
+    }
+
+    const distance = stack[ids].d;
+
+    stack = stack
+      .slice(0, ids + 1)
+      .map(({ h, d }) => ({ h, d: d + 1 }));
+    stack.push(peak);
+
+    return distance;
+  });
+};
