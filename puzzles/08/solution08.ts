@@ -27,6 +27,7 @@ const input = readFile('input.txt')
   //   .sortBy(({ x: x1, y: y1}, { x: x2, y: y2 }) => (y1 - y2) || (x1 - x2))
   //   .reduce(0, (sum) => sum += 1);
 
+  /* Part 2 */
   const lVis = H(grid)
     .map(getTreeLineVisibility)
     .flatten();
