@@ -1,7 +1,7 @@
 import { isOverlapping } from '../../helpers/arrays';
 import { output, readFile } from '../../helpers/streams';
 
-const answer = readFile('input.txt')
+const answer = readFile('puzzles/04/input.txt')
   .split().compact()
   .map((str) => str.split(','))
   .map((pair) => pair.map((part) => part.split('-')))

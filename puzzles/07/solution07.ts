@@ -3,7 +3,7 @@ import Stream = Highland.Stream;
 import { readFile, output, batchWithHead } from '../../helpers/streams';
 import { getDirs, getSize, parseCommand, updatePath } from './helpers';
 
-const input = readFile('input.txt')
+const input = readFile('puzzles/07/input.txt')
   .split().compact();
 
 const TOTAL_SPACE = 70000000;

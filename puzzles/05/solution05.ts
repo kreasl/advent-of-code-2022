@@ -2,7 +2,7 @@ import * as H from 'highland';
 import { parseIntArray } from '../../helpers/arrays';
 import { takeWhile, dropWhile, readFile, output } from '../../helpers/streams';
 
-const input = readFile('input.txt').split();
+const input = readFile('puzzles/05/input.txt').split();
 
 const parseState = (data) => {
   const parsedState = data.map((line) => line.match(/.{1,4}/g));

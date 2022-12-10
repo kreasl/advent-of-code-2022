@@ -3,7 +3,7 @@ import { getTuples, readFile, output, takeWhile } from '../../helpers/streams';
 
 const TUPLE_SIZE = 14;
 
-const input = readFile('input.txt')
+const input = readFile('puzzles/06/input.txt')
   .split().compact()
   .splitBy('');
 

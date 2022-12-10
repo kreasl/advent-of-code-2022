@@ -5,7 +5,7 @@ const PRIORITY = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 const getPriority = (ch) => PRIORITY.indexOf(ch) + 1;
 
-const answer = readFile('input.txt')
+const answer = readFile('puzzles/03/input.txt')
   .split().compact()
   .map((s) => s.split(''))
   .map((arr) => arr.sort())

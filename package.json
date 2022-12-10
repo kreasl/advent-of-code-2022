@@ -5,6 +5,19 @@
   "repository": "git@github.com:kreasl/advent-of-code-2022.git",
   "author": "Yury Talapila <yury.talapila@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "day01": "node_modules/.bin/ts-node puzzles/01/solution01.ts",
+    "day02": "node_modules/.bin/ts-node puzzles/02/solution02.ts",
+    "day03_1": "node_modules/.bin/ts-node puzzles/03/solution03_1.ts",
+    "day03_2": "node_modules/.bin/ts-node puzzles/03/solution03_2.ts",
+    "day04": "node_modules/.bin/ts-node puzzles/04/solution04.ts",
+    "day05": "node_modules/.bin/ts-node puzzles/05/solution05.ts",
+    "day06": "node_modules/.bin/ts-node puzzles/06/solution06.ts",
+    "day07": "node_modules/.bin/ts-node puzzles/07/solution07.ts",
+    "day08": "node_modules/.bin/ts-node puzzles/08/solution08.ts",
+    "day09": "node_modules/.bin/ts-node puzzles/09/solution09.ts",
+    "day10": "node_modules/.bin/ts-node puzzles/10/solution10.ts"
+  },
   "dependencies": {
     "@types/highland": "^2.12.14",
     "highland": "^2.13.5",

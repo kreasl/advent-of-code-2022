@@ -3,7 +3,7 @@ import { readFile, output } from '../../helpers/streams';
 import { parseIntArray, transpose } from '../../helpers/arrays';
 import { getLineVisibility, getTreeLineVisibility } from './helpers';
 
-const input = readFile('input.txt')
+const input = readFile('puzzles/08/input.txt')
   .split().compact();
 
 (async () => {

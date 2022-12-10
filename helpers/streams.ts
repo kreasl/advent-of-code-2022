@@ -5,9 +5,11 @@ import Stream = Highland.Stream;
 export const readFile = H.wrapCallback(fs.readFile);
 
 export const output = <T>(stream: Stream<T> | any): void => {
-  process.stdout.write("\u001b[2J\u001b[0;0H");
+  process.stdout.write("\u001b[2J\u001b[0;0H\n");
+
   if (H.isStream(stream)) {
     stream
+      .concat(H(['\n'])) // yarn output workaround
       .map(JSON.stringify)
       .intersperse('\n')
       .pipe(process.stdout);
@@ -20,7 +22,7 @@ export const draw = (stream: Stream< number>, width: number, height: number): vo
   const EMPTY = '·';
   const NON_EMPTY = '▓';
 
-  process.stdout.write("\u001b[2J\u001b[0;0H");
+  process.stdout.write("\u001b[2J\u001b[0;0H\n");
 
   stream
     .sortBy((a, b) => a - b)

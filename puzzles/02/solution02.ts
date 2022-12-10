@@ -60,7 +60,7 @@ const getRoundOutcome = ([elf, mine]) => {
   return roundScore + gScores[mine];
 };
 
-const answer = readFile('input.txt')
+const answer = readFile('puzzles/02/input.txt')
   .split()
   .compact()
   .map(getRoundGestures)

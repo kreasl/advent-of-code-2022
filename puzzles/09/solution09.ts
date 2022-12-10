@@ -7,7 +7,7 @@ import {
 import { Dot, Segment } from '../../helpers/interface';
 import { compareDots, compareSegments, getSegmentCount, getSegmentsIntersection } from '../../helpers/geometry';
 
-const input = readFile('input.txt')
+const input = readFile('puzzles/09/input.txt')
   .split().compact();
 
 const ROPE_LENGTH = 9;
