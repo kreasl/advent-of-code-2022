@@ -1,6 +1,6 @@
 import * as H from 'highland';
 import { Cmd, cmdTime, CmdType, Rec, Time } from './interface';
-import { Consumer } from '../../helpers/interface';
+import { Producer } from '../../helpers/interface';
 import Stream = Highland.Stream;
 
 export const parseCommand = (str: string): Cmd => {
@@ -12,7 +12,7 @@ export const parseCommand = (str: string): Cmd => {
   }
 }
 
-export const getTimelineProducer = (): Consumer<Cmd, number | Time> => {
+export const getTimelineProducer = (): Producer<Cmd, number | Time> => {
   let ticks = 0;
   let value = 1;
 
@@ -35,9 +35,9 @@ export const getTimelineProducer = (): Consumer<Cmd, number | Time> => {
   }
 }
 
-export const getStrengthReadingsProducer = (readingThreshold: number): Consumer<Rec, number> => {
-  let counter = -20;
-  let ticks = 20;
+export const getStrengthReadingsProducer = (readingThreshold: number, readingOffset: number): Producer<Rec, number> => {
+  let counter = readingOffset;
+  let ticks = (readingThreshold + readingOffset) % readingThreshold;
   let value = 1;
 
   return (err, rec, push, next) => {
@@ -62,7 +62,7 @@ export const getStrengthReadingsProducer = (readingThreshold: number): Consumer<
   };
 }
 
-export const getCrtProducer = (lineSize: number, linesNo: number): Consumer<Rec, number> => {
+export const getCrtProducer = (lineSize: number, linesNo: number): Producer<Rec, number> => {
   let line = 0;
   let beamPos = 0;
   let spritePos = 1;

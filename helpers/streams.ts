@@ -5,6 +5,7 @@ import Stream = Highland.Stream;
 export const readFile = H.wrapCallback(fs.readFile);
 
 export const output = <T>(stream: Stream<T> | any): void => {
+  process.stdout.write("\u001b[2J\u001b[0;0H");
   if (H.isStream(stream)) {
     stream
       .map(JSON.stringify)
@@ -17,7 +18,9 @@ export const output = <T>(stream: Stream<T> | any): void => {
 
 export const draw = (stream: Stream< number>, width: number, height: number): void => {
   const EMPTY = '·';
-  const NON_EMPTY = '#';
+  const NON_EMPTY = '▓';
+
+  process.stdout.write("\u001b[2J\u001b[0;0H");
 
   stream
     .sortBy((a, b) => a - b)
@@ -29,7 +32,7 @@ export const draw = (stream: Stream< number>, width: number, height: number): vo
 
       return (err, x, push, next) => {
         if (H.isNil(x)) {
-          push(null, Array(size - pos).fill(EMPTY));
+          push(null, Array(size - pos - 1).fill(EMPTY));
           push(null, H.nil);
           return;
         }

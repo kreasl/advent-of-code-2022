@@ -1,4 +1,4 @@
-export type Consumer<T, U> = (
+export type Producer<T, U> = (
   err: Error,
   x: T | Highland.Nil,
   push: (err: Error | null, value?: U | Highland.Nil) => void,

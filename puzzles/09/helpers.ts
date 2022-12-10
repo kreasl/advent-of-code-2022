@@ -1,6 +1,6 @@
 import * as H from 'highland';
 import { Dir, dirShifts, Move } from './interface';
-import { Consumer, Dot, Segment, Vec } from '../../helpers/interface';
+import { Producer, Dot, Segment, Vec } from '../../helpers/interface';
 import { compareDots, composeVectors, reverseVector } from '../../helpers/geometry';
 
 export const parseMove = (s: string): Move => {
@@ -35,7 +35,7 @@ export const getNextShift = (head: Dot, tail: Dot): Vec => {
   };
 };
 
-export const getMoveConsumer = (ropeLength: number): Consumer<Move, Segment> => {
+export const getMoveConsumer = (ropeLength: number): Producer<Move, Segment> => {
   let rope: Dot[] = Array(ropeLength + 1).fill(0)
     .map(() => ({ x: 0, y: 0 }));
 
