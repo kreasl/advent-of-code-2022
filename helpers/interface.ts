@@ -10,9 +10,18 @@ export interface Dot {
   y: number;
 }
 
+export interface PowerDot extends Dot {
+  power: number;
+}
+
 export type Vec = Dot;
 
 export interface Segment {
   a: Dot,
   b: Dot,
+}
+
+export interface Smb {
+  pos: number;
+  char: string;
 }
