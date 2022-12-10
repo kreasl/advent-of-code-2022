@@ -2,7 +2,7 @@ import * as H from 'highland';
 import { readFile, output } from '../../helpers/streams';
 import {
   parseMove,
-  getMoveConsumer,
+  getMoveProducer,
 } from './helpers';
 import { Dot, Segment } from '../../helpers/interface';
 import { compareDots, compareSegments, getSegmentCount, getSegmentsIntersection } from '../../helpers/geometry';
@@ -16,7 +16,7 @@ const moves = input
   .map(parseMove);
 
 const segments = moves
-  .consume(getMoveConsumer(ROPE_LENGTH))
+  .consume(getMoveProducer(ROPE_LENGTH))
   .map((s: Segment) => [s, { a: s.b, b: s.a }].sort(compareSegments)[0])
   .sortBy(compareSegments);
 

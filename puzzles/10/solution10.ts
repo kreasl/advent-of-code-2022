@@ -2,7 +2,7 @@ import { draw, output, readFile } from '../../helpers/streams';
 import { getCrtProducer, getStrengthReadingsProducer, getTimelineProducer, parseCommand } from './helpers';
 
 const READING_THRESHOLD = 40;
-const READING_OFFSET = -20;
+const READING_OFFSET = 20;
 const LINES_NO = 6;
 const LINE_SIZE = 40;
 

@@ -5,13 +5,13 @@ import Stream = Highland.Stream;
 export const readFile = H.wrapCallback(fs.readFile);
 
 export const output = <T>(stream: Stream<T> | any): void => {
-  process.stdout.write("\u001b[2J\u001b[0;0H\n");
+  process.stdout.write("\u001b[2J\u001b[0;0H");
 
   if (H.isStream(stream)) {
     stream
-      .concat(H(['\n'])) // yarn output workaround
-      .map(JSON.stringify)
+      .map((x) => typeof x === 'string' ? x : JSON.stringify(x))
       .intersperse('\n')
+      .concat(H(['\n'])) // yarn output workaround
       .pipe(process.stdout);
   } else {
     console.log(stream);
@@ -22,7 +22,7 @@ export const draw = (stream: Stream< number>, width: number, height: number): vo
   const EMPTY = '·';
   const NON_EMPTY = '▓';
 
-  process.stdout.write("\u001b[2J\u001b[0;0H\n");
+  process.stdout.write("\u001b[2J\u001b[0;0H");
 
   stream
     .sortBy((a, b) => a - b)
@@ -53,6 +53,7 @@ export const draw = (stream: Stream< number>, width: number, height: number): vo
     .batch(width)
     .map((arr) => arr.join(''))
     .intersperse('\n')
+    .concat(H(['\n'])) // yarn output workaround
     .pipe(process.stdout);
 };
 

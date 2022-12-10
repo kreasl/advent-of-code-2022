@@ -35,7 +35,7 @@ export const getNextShift = (head: Dot, tail: Dot): Vec => {
   };
 };
 
-export const getMoveConsumer = (ropeLength: number): Producer<Move, Segment> => {
+export const getMoveProducer = (ropeLength: number): Producer<Move, Segment> => {
   let rope: Dot[] = Array(ropeLength + 1).fill(0)
     .map(() => ({ x: 0, y: 0 }));
 

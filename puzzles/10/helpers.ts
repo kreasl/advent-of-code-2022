@@ -1,7 +1,6 @@
 import * as H from 'highland';
 import { Cmd, cmdTime, CmdType, Rec, Time } from './interface';
 import { Producer } from '../../helpers/interface';
-import Stream = Highland.Stream;
 
 export const parseCommand = (str: string): Cmd => {
   const [type, arg] = str.split(' ');
@@ -36,8 +35,8 @@ export const getTimelineProducer = (): Producer<Cmd, number | Time> => {
 }
 
 export const getStrengthReadingsProducer = (readingThreshold: number, readingOffset: number): Producer<Rec, number> => {
-  let counter = readingOffset;
-  let ticks = (readingThreshold + readingOffset) % readingThreshold;
+  let counter = -readingOffset;
+  let ticks = readingThreshold - readingOffset;
   let value = 1;
 
   return (err, rec, push, next) => {
