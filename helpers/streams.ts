@@ -15,6 +15,42 @@ export const output = <T>(stream: Stream<T> | any): void => {
   }
 }
 
+export const draw = (stream: Stream< number>, width: number, height: number): void => {
+  const EMPTY = '·';
+  const NON_EMPTY = '#';
+
+  stream
+    .sortBy((a, b) => a - b)
+    .uniq()
+    .consume((() => {
+      const size = width * height;
+
+      let pos = 0;
+
+      return (err, x, push, next) => {
+        if (H.isNil(x)) {
+          push(null, Array(size - pos).fill(EMPTY));
+          push(null, H.nil);
+          return;
+        }
+        if (pos >= size) {
+          next();
+          return;
+        }
+
+        if (pos !== x) push(null, Array(x - pos - 1).fill(EMPTY));
+        push(null, NON_EMPTY);
+        pos = x;
+        next();
+      }
+    })())
+    .flatten()
+    .batch(width)
+    .map((arr) => arr.join(''))
+    .intersperse('\n')
+    .pipe(process.stdout);
+};
+
 export const takeWhile = <T>(stream: Stream<T>, condition: Function): Stream<T> => {
   let conditionIsMet = true;
 
