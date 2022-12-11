@@ -16,7 +16,8 @@
     "day07": "node_modules/.bin/ts-node puzzles/07/solution07.ts",
     "day08": "node_modules/.bin/ts-node puzzles/08/solution08.ts",
     "day09": "node_modules/.bin/ts-node puzzles/09/solution09.ts",
-    "day10": "node_modules/.bin/ts-node puzzles/10/solution10.ts"
+    "day10": "node_modules/.bin/ts-node puzzles/10/solution10.ts",
+    "day11": "node_modules/.bin/ts-node puzzles/11/solution11.ts"
   },
   "dependencies": {
     "@types/highland": "^2.12.14",
